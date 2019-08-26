@@ -4,4 +4,4 @@ Para testar o programa criar no mesmo diretório onde se encontra os scripts wor
 Na pasta "entradas" colocar os arquivos: wordcount.txt e clientes_pedidos.csv
 A pasta "saidas" receberá os arquivos de saida dos programas.
 Para executar o programa:
-spark-submit <nome do script python>
+spark-submit "nome do script python"
