@@ -2,14 +2,15 @@ from pyspark import SparkContext, SparkConf
 from pyspark.sql import SQLContext
 from pyspark.sql import Row
 from pyspark.sql.functions import col
+import os
 
 conf = SparkConf().setAppName("Clientes_Pedidos")
 sc = SparkContext(conf=conf)
 sqlContext = SQLContext(sc)
 
 
-entrada = 'file:///home/luciana/repo/desafio_agregacao/entradas/clientes_pedidos.csv'
-saida = 'file:///home/luciana/repo/desafio_agregacao/saidas/clientes_pedidos'
+entrada = 'file://' + os.path.dirname(os.path.realpath(__file__)) + '/entradas/clientes_pedidos.csv'
+saida = 'file://' + os.path.dirname(os.path.realpath(__file__)) + '/saidas/clientes_pedidos'
 
 df_clientes_pedidos = sqlContext.read.format("com.databricks.spark.csv").option("delimiter", ",").option("header", "true").load(entrada)
 

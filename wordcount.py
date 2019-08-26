@@ -1,13 +1,14 @@
 from pyspark import SparkContext, SparkConf
 from pyspark.sql import SQLContext
 from pyspark.sql import Row
+import os
 
 conf = SparkConf().setAppName("WordCount")
 sc = SparkContext(conf=conf)
 sqlContext = SQLContext(sc)
 
-entrada = 'file:///home/luciana/repo/desafio_agregacao/entradas/wordcount.txt'
-saida = 'file:///home/luciana/repo/desafio_agregacao/saidas/wordcount'
+entrada = 'file://' + os.path.dirname(os.path.realpath(__file__)) + '/entradas/wordcount.txt'
+saida = 'file://' + os.path.dirname(os.path.realpath(__file__)) + '/saidas/wordcount'
 
 
 #Cria o RDD com o conteúdo do wordcount.txt
@@ -33,7 +34,6 @@ query_final = sqlContext.sql("SELECT palavra,quantidade FROM tmp_wordcount where
 
 
 #salvando em arquivo o resultado final
-#query_final.rdd.map(tuple).coalesce(1).saveAsTextFile(saida)
 query_final.coalesce(1).write.format("com.databricks.spark.csv").option("header", "false").mode("overwrite").save(saida)
 
 
